@@ -30,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
        <Navbar/>
         {children}
-        <h2 className="fontbold text-5xl text-center py-5">Footer</h2>
+       
         </body>
     </html>
   );

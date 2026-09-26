@@ -5,7 +5,7 @@ import PlanSavedGroup from "./PlanSavedGroup";
 
 const Navbar = () => {
   return (
-    <nav className="bg-base-100 shadow-sm ">
+    <nav className="bg-base-100 shadow-sm py-2">
       <div className="navbar container mx-auto sticky top-0 z-50">
         <div className="navbar-start">
           <div className="dropdown">

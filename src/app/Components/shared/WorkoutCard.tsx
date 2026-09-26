@@ -10,6 +10,7 @@ const WorkoutCard = ({ workout }: { workout: Workout }) => {
       <div className="relative h-120 w-full">
         <Image src={workout.image}
           alt={workout.name} fill
+           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="w-full h-full object-cover"/>
       </div>
 

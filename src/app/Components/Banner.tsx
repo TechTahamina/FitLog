@@ -4,7 +4,7 @@ import bannerImg from "@/assets/banner.png";
 
 const Banner = () => {
   return (
-    <div className="container mx-auto lg:my-10 flex flex-col lg:flex-row items-center justify-between gap-6 bg-[#393c42] px-6 py-8 lg:px-26 lg:py-10 rounded-lg lg:min-h-120 lg:max-w-380">
+    <div className="lg:container mx-4 sm:mx-6 lg:mx-auto my-10 flex flex-col lg:flex-row items-center justify-between gap-6 bg-[#393c42] px-8 lg:px-26 py-8 lg:py-10 rounded-lg lg:min-h-120 lg:max-w-380">
       {/* text */}
       <div className=" ">
         <h6 className="font-medium tracking-widest text-[11px] text-[#C2F800] text-center lg:text-left">
@@ -24,7 +24,7 @@ const Banner = () => {
         </div>
       </div>
       {/* img  */}
-      <div className="">
+      <div className="pt-6">
         <Image src={bannerImg} alt="banner" />
       </div>
     </div>

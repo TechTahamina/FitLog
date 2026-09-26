@@ -4,25 +4,27 @@ import bannerImg from "@/assets/banner.png";
 
 const Banner = () => {
   return (
-    <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-1 bg-[#393c42] p-20 m-3 rounded-lg h-120">
+    <div className="container mx-auto lg:my-10 flex flex-col lg:flex-row items-center justify-between gap-6 bg-[#393c42] px-6 py-8 lg:px-26 lg:py-10 rounded-lg lg:min-h-120 lg:max-w-380">
       {/* text */}
       <div className=" ">
-        <h6 className="font-medium tracking-widest text-[11px] text-[#C2F800] text-left">
+        <h6 className="font-medium tracking-widest text-[11px] text-[#C2F800] text-center lg:text-left">
           WORKOUT LIBRARY
         </h6>
-        <h1 className="text-6xl font-bold text-left">
+        <h1 className="text-6xl font-bold text-center lg:text-left ">
           TRAIN WITH INTENT. LOG <br /> EVERY SET.
         </h1>
-        <p className="text-left text-[#9CA3AF] mt-4 ">
+        <p className="text-center lg:text-left text-[#9CA3AF] mt-4 ">
           FitLog is a dark, no-nonsense gym companion: pick a lift, lock it{" "}
           <br /> into today&apos;s plan, and watch the week&apos;s work add up.
         </p>
-        <button className="bg-[#C2F800] text-black text-xs font-bold px-4 py-2 rounded-lg mt-4">
+        <div className="flex items-center lg:items-start justify-center lg:justify-start ">
+          <button className="bg-[#C2F800] text-black text-xs font-bold px-4 py-2 rounded-lg mt-4">
           BROWSE WORKOUTS
         </button>
+        </div>
       </div>
       {/* img  */}
-      <div>
+      <div className="">
         <Image src={bannerImg} alt="banner" />
       </div>
     </div>

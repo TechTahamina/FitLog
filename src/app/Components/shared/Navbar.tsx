@@ -5,8 +5,8 @@ import PlanSavedGroup from "./PlanSavedGroup";
 
 const Navbar = () => {
   return (
-    <nav className="bg-base-100 shadow-sm py-2">
-      <div className="navbar container mx-auto sticky top-0 z-50">
+    <nav className="bg-base-100 shadow-sm py-2 sticky top-0 z-50">
+      <div className="navbar container mx-auto ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -39,8 +39,8 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl oswald-font">
-            <Image src={Logo} alt="Logo" width={30} height={30} className="mr-2" />
+          <a className="btn btn-ghost text-xl oswald-font  ">
+            <Image src={Logo} alt="Logo" width={30} height={30} className="mr-1" />
              FITLOG
           </a>
         </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end ">
            <PlanSavedGroup planCount={0} savedCount={0} />
         </div>
       </div>

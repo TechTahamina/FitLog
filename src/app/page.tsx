@@ -1,6 +1,6 @@
-import React from 'react';
 import Banner from './Components/Banner';
 import Thelibrary from './Components/Thelibrary';
+import WorkoutPage from "./workouts/page";
 
 
 const page = () => {
@@ -8,7 +8,7 @@ const page = () => {
     <div>
       <Banner />
       <Thelibrary />
-      
+      <WorkoutPage/>
     </div>
   );
 };

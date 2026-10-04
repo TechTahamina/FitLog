@@ -1,11 +1,13 @@
 import { Clock, Flame, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Workout } from "@/types/workout.types";
 
 
 const WorkoutCard = ({ workout }: { workout: Workout }) => {
   return (
         <div className="bg-[#111111] rounded-2xl overflow-hidden border border-white/5">
+     <Link href={`/workouts/${workout.id}`}>
       {/* Image */}
       <div className="relative h-120 w-full">
         <Image src={workout.image}
@@ -18,7 +20,7 @@ const WorkoutCard = ({ workout }: { workout: Workout }) => {
       <div className="p-4">
         {/* Badges */}
         <div className="flex gap-2 mb-3">
-          {workout.muscleGroups.map((group) => (
+          {workout.muscleGroups?.map((group) => (
             <span
               key={group}
               className="bg-lime-400 text-black text-xs font-bold px-3 py-1 rounded-full uppercase"
@@ -53,6 +55,7 @@ const WorkoutCard = ({ workout }: { workout: Workout }) => {
           </div>
         </div>
       </div>
+      </Link>
     </div>
 
   );

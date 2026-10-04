@@ -1,12 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-} */
-
-
 .oswald-font {
   font-family: "Oswald", sans-serif;
   font-optical-sizing: auto;

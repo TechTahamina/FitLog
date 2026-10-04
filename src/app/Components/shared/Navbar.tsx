@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "@/assets/logo.png";
 import PlanSavedGroup from "./PlanSavedGroup";
 
@@ -32,25 +33,25 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="bg-[#434e1963] text-[#C2F800] font-md rounded-full">Workouts</a>
+                <Link href="/" className="bg-[#434e1963] text-[#C2F800] font-md rounded-full">Workouts</Link>
               </li>
               <li>
-               <a>My plan</a>
+               <Link href="/my-plan">My plan</Link>
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl oswald-font  ">
+          <Link href="/" className="btn btn-ghost text-xl oswald-font  ">
             <Image src={Logo} alt="Logo" width={30} height={30} className="mr-1" />
              FITLOG
-          </a>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a className="bg-[#434e1963] text-[#C2F800] font-md rounded-full">Workouts</a>
+             <Link href="/workouts" className="bg-[#434e1963] text-[#C2F800] font-md rounded-full">Workouts</Link>
             </li>
             <li>
-              <a>My plan</a>
+              <Link href="/my-plan">My plan</Link>
             </li>
           </ul>
         </div>

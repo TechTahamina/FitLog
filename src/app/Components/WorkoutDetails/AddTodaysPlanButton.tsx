@@ -4,6 +4,7 @@ import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { Workout } from "@/types/workout.types";
 import { WorkoutContext } from "@/Context/WorkoutProvider";
 import { useContext } from "react";
+import { toast } from "react-toastify";
 
 const AddTodaysPlanButton = ({workout}: Workout) => {
 
@@ -15,7 +16,7 @@ const AddTodaysPlanButton = ({workout}: Workout) => {
         console.log("Add to today's plan button clicked", workout);
         setWorkouts([...workouts, workout]);
 
-        alert(`${workout.name} has been added to today's plan!`);
+        toast.success(`${workout.name} has been added to today's plan!`);
     }
   return (
     <button className="flex items-center gap-2 bg-lime-400 text-black font-bold text-sm px-5 py-3 rounded-xl hover:bg-lime-300 transition" onClick={() => handleAddToTodaysPlan()}>

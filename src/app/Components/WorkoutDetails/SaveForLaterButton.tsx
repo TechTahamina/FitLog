@@ -6,6 +6,7 @@ import { useContext } from "react";
 
 import { WorkoutContext } from "@/Context/WorkoutProvider";
 import { Workout } from "@/types/workout.types";
+import { toast } from "react-toastify";
 
 const SaveForLaterButton = ({ workout }: { workout: Workout }) => {
   const { saveForLater, setSaveForLater } = useContext(WorkoutContext);
@@ -13,7 +14,7 @@ const SaveForLaterButton = ({ workout }: { workout: Workout }) => {
   const handleSaveForLater = () => {
     console.log("save for later button clicked", workout);
     setSaveForLater([...saveForLater, workout]);
-    alert(`${workout.name} has been added to save for later!`);
+    toast.success(`${workout.name} has been added to save for later!`);
   };
 
   return (

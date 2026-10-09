@@ -2,18 +2,21 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
-import { useContext } from "react";
 
-import { WorkoutContext } from "@/Context/WorkoutProvider";
+import { usePlan } from "@/Context/WorkoutProvider";
 import { Workout } from "@/types/workout.types";
 import { toast } from "react-toastify";
 
 const SaveForLaterButton = ({ workout }: { workout: Workout }) => {
-  const { saveForLater, setSaveForLater } = useContext(WorkoutContext);
+  const { saveForLater, setSaveForLater } = usePlan();
 
   const handleSaveForLater = () => {
-    console.log("save for later button clicked", workout);
-    setSaveForLater([...saveForLater, workout]);
+    if (saveForLater.some((w) => w.id === workout.id)) {
+      toast.error(`${workout.name} is already saved for later!`);
+      return;
+    }
+
+    setSaveForLater((prev) => [...prev, workout]);
     toast.success(`${workout.name} has been added to save for later!`);
   };
 

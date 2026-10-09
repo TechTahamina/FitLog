@@ -8,8 +8,8 @@ interface PlanSavedGroupProps {
 const PlanSavedGroup = ({ planCount, savedCount }: PlanSavedGroupProps) => {
   return (
     <div className="flex items-center gap-2 lg:gap-6 mr-1 lg:mr-4">
-      <CounterItem label="Plan" count={planCount} highlight />
-      <CounterItem label="Saved" count={savedCount} />
+      <CounterItem label="Plan" count={planCount} href="/my-plan"  highlight />
+      <CounterItem label="Saved" count={savedCount}  href="/my-plan"  />
     </div>
   );
 };

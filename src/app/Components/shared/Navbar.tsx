@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assets/logo.png";
 import PlanSavedGroup from "./PlanSavedGroup";
+import { usePlan } from "@/Context/WorkoutProvider";
 
 
 const Navbar = () => {
+   const { workouts, saveForLater } = usePlan();
+
   return (
     <nav className="bg-base-100 shadow-sm py-2 sticky top-0 z-50">
       <div className="navbar container mx-auto ">
@@ -56,7 +60,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end ">
-           <PlanSavedGroup planCount={0} savedCount={0} />
+           <PlanSavedGroup planCount={workouts.length} savedCount={saveForLater.length} />
         </div>
       </div>
     </nav>

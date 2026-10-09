@@ -2,24 +2,27 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarPlus } from "@fortawesome/free-regular-svg-icons";
 import { Workout } from "@/types/workout.types";
-import { WorkoutContext } from "@/Context/WorkoutProvider";
-import { useContext } from "react";
+import { usePlan } from "@/Context/WorkoutProvider";
 import { toast } from "react-toastify";
 
-const AddTodaysPlanButton = ({workout}: Workout) => {
+const AddTodaysPlanButton = ({ workout }: { workout: Workout }) => {
+  const { workouts, setWorkouts } = usePlan();
 
-    const{workouts,
-  setWorkouts} = useContext(WorkoutContext);
-
- 
-    const handleAddToTodaysPlan = () => {
-        console.log("Add to today's plan button clicked", workout);
-        setWorkouts([...workouts, workout]);
-
-        toast.success(`${workout.name} has been added to today's plan!`);
+  const handleAddToTodaysPlan = () => {
+    if (workouts.some((w) => w.id === workout.id)) {
+      toast.error(`${workout.name} is already in today's plan!`);
+      return;
     }
+
+    setWorkouts((prev) => [...prev, workout]);
+    toast.success(`${workout.name} has been added to today's plan!`);
+  };
+
   return (
-    <button className="flex items-center gap-2 bg-lime-400 text-black font-bold text-sm px-5 py-3 rounded-xl hover:bg-lime-300 transition" onClick={() => handleAddToTodaysPlan()}>
+    <button
+      className="flex items-center gap-2 bg-lime-400 text-black font-bold text-sm px-5 py-3 rounded-xl hover:bg-lime-300 transition"
+      onClick={handleAddToTodaysPlan}
+    >
       {/* <CalendarPlus size={16} /> */}
       <FontAwesomeIcon icon={faCalendarPlus} className="w-4 h-4" />
       Add to today&apos;s plan

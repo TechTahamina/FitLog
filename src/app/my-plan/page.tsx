@@ -234,7 +234,7 @@ const MyPlanWorkouts = () => {
                           </span>
                           <span className="flex items-center gap-1">
                             <Flame size={12} className="text-[#CCFF00]" />
-                            {workout.calories} kcal
+                            {workout.caloriesBurned} kcal
                           </span>
                           <span className="flex items-center gap-1">
                             <Star size={12} className="text-[#CCFF00]" />

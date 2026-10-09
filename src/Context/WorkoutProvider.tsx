@@ -1,22 +1,36 @@
 "use client";
-import React, { createContext, ReactNode, useState } from "react";
-import { useContext } from "react";
 
-export const WorkoutContext = createContext({});
-const WorkoutProvider = ({children}: {children: ReactNode}) => {
-const [workouts, setWorkouts] = useState([]);
-const [saveForLater,setSaveForLater] =useState([]);
+import { createContext, ReactNode, useContext, useState } from "react";
+import { Workout } from "@/types/workout.types";
 
-const sharedData = {
-  workouts,
-  setWorkouts,
-  saveForLater,
-  setSaveForLater
+type WorkoutContextType = {
+  workouts: Workout[];
+  setWorkouts: React.Dispatch<React.SetStateAction<Workout[]>>;
+  saveForLater: Workout[];
+  setSaveForLater: React.Dispatch<React.SetStateAction<Workout[]>>;
 };
 
-  return (<WorkoutContext.Provider value={sharedData}>{children}</WorkoutContext.Provider>)
+export const WorkoutContext = createContext<WorkoutContextType | null>(null);
+
+const WorkoutProvider = ({ children }: { children: ReactNode }) => {
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [saveForLater, setSaveForLater] = useState<Workout[]>([]);
+
+  return (
+    <WorkoutContext.Provider
+      value={{ workouts, setWorkouts, saveForLater, setSaveForLater }}
+    >
+      {children}
+    </WorkoutContext.Provider>
+  );
 };
-export const usePlan = () => useContext(WorkoutContext);
+
+export const usePlan = () => {
+  const ctx = useContext(WorkoutContext);
+  if (!ctx) {
+    throw new Error("usePlan must be used inside WorkoutProvider");
+  }
+  return ctx;
+};
+
 export default WorkoutProvider;
-
-

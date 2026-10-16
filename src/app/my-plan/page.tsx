@@ -292,7 +292,7 @@ const MyPlanWorkouts = () => {
                         View Details
                       </button>
 
-                      {renderDoneButton(workout.id)}
+                      {renderDoneButton(workout)}
 
                       {/*  desktop */}
                       <button

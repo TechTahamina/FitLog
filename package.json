@@ -21,6 +21,9 @@
     "react-hot-toast": "^2.6.1",
     "react-toastify": "^11.1.0"
   },
+  "overrides": {
+    "postcss": "8.5.23"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",

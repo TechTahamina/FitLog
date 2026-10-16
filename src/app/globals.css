@@ -7,3 +7,6 @@
   font-weight: 200 - 700;
   font-style: normal;
 }
+html {
+  scroll-behavior: smooth;
+}

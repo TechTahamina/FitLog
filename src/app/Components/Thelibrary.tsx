@@ -15,7 +15,7 @@ const getWorkouts = async () => {
 const Thelibrary = async () => {
   const workoutsData = await getWorkouts();
   return (
-    <section className="container mx-auto my-17.5 py-2 px-4 sm:px-0">
+    <section id="library"  className="scroll-mt-20 container mx-auto my-17.5 py-2 px-4 sm:px-0">
       <h1 className="font-bold text-3xl text-white uppercase mx-auto">THE LIBRARY</h1>
       <p className="text-[#9CA3AF] mt-1 mx-auto">
         Twelve lifts covering every major muscle group.

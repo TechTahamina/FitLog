@@ -11,7 +11,7 @@ const WorkoutLoading = () => {
       <Bone className="h-9 w-48" />
       <Bone className="h-4 w-80 mt-3" />
 
-      {/* Stats panel */}
+     
       <div className="mt-8 grid grid-cols-3 gap-6 rounded-2xl bg-[#2f323c] p-8">
         {[0, 1, 2].map((i) => (
           <div key={i}>

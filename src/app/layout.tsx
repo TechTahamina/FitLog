@@ -39,7 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
-          <ToastContainer />
+          <ToastContainer position="top-right" theme="dark" autoClose={2000}/>
         </WorkoutProvider>
       </body>
     </html>

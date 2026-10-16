@@ -5,13 +5,22 @@ import { Workout } from "@/types/workout.types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Clock, Flame, Star, Check, X } from "lucide-react";
+import { toast } from "react-toastify";
 
 const MyPlanWorkouts = () => {
   const { workouts, setWorkouts, saveForLater, setSaveForLater } = usePlan();
   const router = useRouter();
   const [tab, setTab] = useState<"plan" | "saved">("plan");
 
-  // list that matches the active tab
+  const [completedIds, setCompletedIds] = useState<Set<Workout["id"]>>(
+    new Set(),
+  );
+
+  const markDone = (workout: Workout) => {
+    setCompletedIds((prev) => new Set(prev).add(workout.id));
+    toast.success(`${workout.name} marked as done!`);
+  };
+
   const activeList = tab === "plan" ? workouts : saveForLater;
 
   const exercisesCount = activeList.length;
@@ -23,6 +32,25 @@ const MyPlanWorkouts = () => {
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
+
+  const renderDoneButton = (workout: Workout) => {
+    const isDone = completedIds.has(workout.id);
+
+    return (
+      <button
+      disabled={isDone}
+      onClick={() => markDone(workout)}
+      className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold sm:flex-none ${
+        isDone
+          ? "cursor-not-allowed bg-[#CCFF00]/30 text-black/60"
+          : "bg-[#CCFF00] text-black hover:brightness-95"
+      }`}
+    >
+      <Check size={14} />
+      {isDone ? "Done" : "Mark as Done"}
+    </button>
+    );
+  };
 
   return (
     <div className="container mx-auto py-5">
@@ -105,7 +133,7 @@ const MyPlanWorkouts = () => {
                     key={workout.id}
                     className="flex flex-col gap-4 rounded-2xl border border-white/5 bg-[#12141a] px-4 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-5"
                   >
-                    {/* Top: image + info (+ remove on mobile) */}
+                    {/* mobile */}
                     <div className="flex min-w-0 items-center gap-3 sm:flex-1 sm:gap-6">
                       {/* Image */}
                       <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-lg sm:h-[100px] sm:w-28">
@@ -134,7 +162,7 @@ const MyPlanWorkouts = () => {
                           </span>
                           <span className="flex items-center gap-1">
                             <Flame size={12} className="text-[#CCFF00]" />
-                            {workout.caloriesBurned } kcal
+                            {workout.caloriesBurned} kcal
                           </span>
                           <span className="flex items-center gap-1">
                             <Star size={12} className="text-[#CCFF00]" />
@@ -143,7 +171,7 @@ const MyPlanWorkouts = () => {
                         </div>
                       </div>
 
-                      {/* Remove: mobile only */}
+                      {/* Remove: top-right  mobile  */}
                       <button
                         aria-label="Remove"
                         className="self-start text-gray-500 hover:text-white sm:hidden"
@@ -162,12 +190,9 @@ const MyPlanWorkouts = () => {
                         View Details
                       </button>
 
-                      <button className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[#CCFF00] px-4 py-2 text-xs font-bold text-black hover:brightness-95 sm:flex-none">
-                        <Check size={14} />
-                        Mark as Done
-                      </button>
+                      {renderDoneButton(workout)}
 
-                      {/* Remove: desktop only */}
+                      {/* Remove: desktop  */}
                       <button
                         aria-label="Remove"
                         className="hidden text-gray-500 hover:text-white sm:block"
@@ -188,7 +213,7 @@ const MyPlanWorkouts = () => {
                 <p className="oswald-font text-center text-white font-bold text-xl">
                   NOTHING HERE YET
                 </p>
-                <p className="oswald-font text-center text-sm text-[#8A92A0] font-">
+                <p className="oswald-font text-center text-sm text-[#8A92A0] font-normal">
                   Browse the library and add a lift to get today moving.
                 </p>
                 <button
@@ -200,12 +225,17 @@ const MyPlanWorkouts = () => {
               </div>
             ) : (
               saveForLater.map((workout: Workout) => {
+                const handleRemove = () =>
+                  setSaveForLater((prev: Workout[]) =>
+                    prev.filter((w) => w.id !== workout.id),
+                  );
+
                 return (
                   <div
                     key={workout.id}
                     className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-[#12141a] p-3 sm:flex-row sm:items-center sm:gap-6"
                   >
-                    {/* Top: image + info (+ remove button on mobile) */}
+                    {/* Top remove button on mobile) */}
                     <div className="flex items-center gap-3 sm:flex-1 sm:gap-6 min-w-0">
                       {/* Image */}
                       <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg sm:h-16 sm:w-28">
@@ -243,15 +273,11 @@ const MyPlanWorkouts = () => {
                         </div>
                       </div>
 
-                      {/* Remove: top-right on mobile only */}
+                      {/* Remove on mobile  */}
                       <button
                         aria-label="Remove"
                         className="self-start text-gray-500 hover:text-white sm:hidden"
-                        onClick={() =>
-                          setSaveForLater((prev: Workout[]) =>
-                            prev.filter((w) => w.id !== workout.id),
-                          )
-                        }
+                        onClick={handleRemove}
                       >
                         <X size={16} />
                       </button>
@@ -266,20 +292,13 @@ const MyPlanWorkouts = () => {
                         View Details
                       </button>
 
-                      <button className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-[#CCFF00] px-4 py-2 text-xs font-bold text-black hover:brightness-95 sm:flex-none">
-                        <Check size={14} />
-                        Mark as Done
-                      </button>
+                      {renderDoneButton(workout.id)}
 
-                      {/* Remove: desktop only */}
+                      {/*  desktop */}
                       <button
                         aria-label="Remove"
                         className="hidden text-gray-500 hover:text-white sm:block"
-                        onClick={() =>
-                          setSaveForLater((prev: Workout[]) =>
-                            prev.filter((w) => w.id !== workout.id),
-                          )
-                        }
+                        onClick={handleRemove}
                       >
                         <X size={16} />
                       </button>

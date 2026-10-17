@@ -5,8 +5,11 @@ import { Workout } from "@/types/workout.types";
 import { usePlan } from "@/Context/WorkoutProvider";
 import { toast } from "react-toastify";
 
+
 const AddTodaysPlanButton = ({ workout }: { workout: Workout }) => {
   const { workouts, setWorkouts } = usePlan();
+
+ 
 
   const handleAddToTodaysPlan = () => {
     if (workouts.some((w) => w.id === workout.id)) {

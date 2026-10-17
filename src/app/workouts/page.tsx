@@ -1,6 +1,7 @@
 import { Workout } from "@/types/workout.types";
 import WorkoutCard from "../Components/shared/WorkoutCard";
 import Banner from "../Components/Banner";
+import TheLibrary from "@/app/Components/Thelibrary";
 
 const getWorkouts = async (): Promise<Workout[]> => {
   const res = await fetch("https://api.api-store.workers.dev/api/fitlog", {
@@ -16,6 +17,7 @@ const WorkoutPage = async () => {
   return (
     <>
     <Banner/>
+    <TheLibrary/>
       <div className=" container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {workouts.map((workout) => (
           <WorkoutCard key={workout.id} workout={workout} />

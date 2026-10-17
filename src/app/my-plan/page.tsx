@@ -8,6 +8,9 @@ import { Clock, Flame, Star, Check, X } from "lucide-react";
 import { toast } from "react-toastify";
 
 const MyPlanWorkouts = () => {
+  const [sortBy, setSortBy] = useState<"duration" | "calories" | "rating">("rating")
+  
+  
   const { workouts, setWorkouts, saveForLater, setSaveForLater } = usePlan();
   const router = useRouter();
   const [tab, setTab] = useState<"plan" | "saved">("plan");
@@ -23,6 +26,25 @@ const MyPlanWorkouts = () => {
 
   const activeList = tab === "plan" ? workouts : saveForLater;
 
+    const sortWorkouts = (workout: Workout[]) => {
+      const sortedAllWorkouts = [ ...workout]
+      if (sortBy === "calories"){
+        sortedAllWorkouts.sort((a,b) => b.caloriesBurned - a.caloriesBurned);
+      }
+
+      else if (sortBy === "duration"){
+        sortedAllWorkouts.sort((a,b) => b.duration - a.duration);
+      }
+      else if (sortBy === "rating"){
+        sortedAllWorkouts.sort((a,b) => b.rating - a.rating);
+      }
+      return sortedAllWorkouts;
+    }
+    const sortedWorkouts = sortWorkouts(workouts)
+    const sortedSaveForLater = sortWorkouts(saveForLater)
+    console.log(sortedWorkouts, "sortedWorkouts");
+    console.log(sortedSaveForLater, "sortedSaveForLater");
+
   const exercisesCount = activeList.length;
   const totalMinutes = activeList.reduce(
     (total, workout) => total + workout.duration,
@@ -36,19 +58,21 @@ const MyPlanWorkouts = () => {
   const renderDoneButton = (workout: Workout) => {
     const isDone = completedIds.has(workout.id);
 
+  
+
     return (
       <button
-      disabled={isDone}
-      onClick={() => markDone(workout)}
-      className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold sm:flex-none ${
-        isDone
-          ? "cursor-not-allowed bg-[#CCFF00]/30 text-black/60"
-          : "bg-[#CCFF00] text-black hover:brightness-95"
-      }`}
-    >
-      <Check size={14} />
-      {isDone ? "Done" : "Mark as Done"}
-    </button>
+        disabled={isDone}
+        onClick={() => markDone(workout)}
+        className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-xs font-bold sm:flex-none ${
+          isDone
+            ? "cursor-not-allowed bg-[#CCFF00]/30 text-black/60"
+            : "bg-[#CCFF00] text-black hover:brightness-95"
+        }`}
+      >
+        <Check size={14} />
+        {isDone ? "Done" : "Mark as Done"}
+      </button>
     );
   };
 
@@ -86,27 +110,44 @@ const MyPlanWorkouts = () => {
       {/* My-Plan-metrics div end */}
 
       {/* tab and sorting start */}
-      {/* tab */}
-      <div role="tablist" className="tabs tabs-box my-5 mx-2 rounded-2xl w-fit">
-        <button
-          role="tab"
-          className={`tab ${tab === "plan" ? "tab-active" : ""} rounded-2xl`}
-          onClick={() => setTab("plan")}
-        >
-          Today&apos;s Plan
-        </button>
-        <button
-          role="tab"
-          className={`tab ${tab === "saved" ? "tab-active" : ""} rounded-2xl`}
-          onClick={() => setTab("saved")}
-        >
-          Saved
-        </button>
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        {/* tab start */}
+        <div
+          role="tablist"
+          className="tabs tabs-box my-5 mx-2 rounded-2xl w-fit"
+        > 
+          <button
+            role="tab"
+            className={`tab ${tab === "plan" ? "tab-active" : ""} rounded-2xl`}
+            onClick={() => setTab("plan")}
+          >
+            Today&apos;s Plan
+          </button>
+          <button
+            role="tab"
+            className={`tab ${tab === "saved" ? "tab-active" : ""} rounded-2xl`}
+            onClick={() => setTab("saved")}
+          >
+            Saved
+          </button>
+        </div>
+        {/* tab end */}
+        {/* sorting start */}
+        <div className="flex items-center justify-center gap-2">
+          <p className="text-sm font-semibold text-[#8A92A0] whitespace-nowrap shrink-0">Sort  By</p>
+          <select value={sortBy} onChange={(e) =>setSortBy(e.target.value as "duration" | "calories" | "rating")} defaultValue="Duration" className="select rounded-2xl bg-[#2f323b] text-sm text-white border border-[#4c515f] ">
+            <option value={"duration"}>Duration</option>
+            <option value={"calories"}>Calories</option>
+            <option value={"rating"}>Rating </option>
+          </select>
+        </div>
+
+        {/* sorting end */}
       </div>
-      <div className="mt-4 bg-base-200 mx-2 p-4 border-0 rounded-2xl">
+      <div className="mt-4 mx-2 p-4 bg-[#2f323b]  border border-dashed border-[#4c515f]  rounded-2xl">
         {tab === "plan" ? (
           <div className="flex flex-col gap-2">
-            {workouts.length === 0 ? (
+            {sortedWorkouts.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-2 p-20">
                 <p className="oswald-font text-center text-white font-bold text-xl">
                   NOTHING HERE YET
@@ -122,7 +163,7 @@ const MyPlanWorkouts = () => {
                 </button>
               </div>
             ) : (
-              workouts.map((workout: Workout) => {
+              sortedWorkouts.map((workout: Workout) => {
                 const handleRemove = () =>
                   setWorkouts((prev: Workout[]) =>
                     prev.filter((w) => w.id !== workout.id),
@@ -136,7 +177,7 @@ const MyPlanWorkouts = () => {
                     {/* mobile */}
                     <div className="flex min-w-0 items-center gap-3 sm:flex-1 sm:gap-6">
                       {/* Image */}
-                      <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-lg sm:h-[100px] sm:w-28">
+                      <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-lg sm:h-25 sm:w-28">
                         <Image
                           src={workout.image}
                           alt={workout.name}
@@ -171,7 +212,7 @@ const MyPlanWorkouts = () => {
                         </div>
                       </div>
 
-                      {/* Remove: top-right  mobile  */}
+                      
                       <button
                         aria-label="Remove"
                         className="self-start text-gray-500 hover:text-white sm:hidden"
@@ -181,7 +222,7 @@ const MyPlanWorkouts = () => {
                       </button>
                     </div>
 
-                    {/* Actions */}
+                    
                     <div className="flex shrink-0 items-center gap-3">
                       <button
                         onClick={() => router.push(`/workouts/${workout.id}`)}
@@ -208,12 +249,12 @@ const MyPlanWorkouts = () => {
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            {saveForLater.length === 0 ? (
+            {sortedSaveForLater.length === 0 ? (
               <div className="flex flex-col items-center justify-center gap-2 p-20">
                 <p className="oswald-font text-center text-white font-bold text-xl">
                   NOTHING HERE YET
                 </p>
-                <p className="oswald-font text-center text-sm text-[#8A92A0] font-normal">
+                <p className="oswald-font text-center text-sm  text-[#8A92A0] font-normal">
                   Browse the library and add a lift to get today moving.
                 </p>
                 <button
@@ -224,7 +265,7 @@ const MyPlanWorkouts = () => {
                 </button>
               </div>
             ) : (
-              saveForLater.map((workout: Workout) => {
+              sortedSaveForLater.map((workout: Workout) => {
                 const handleRemove = () =>
                   setSaveForLater((prev: Workout[]) =>
                     prev.filter((w) => w.id !== workout.id),
@@ -233,12 +274,12 @@ const MyPlanWorkouts = () => {
                 return (
                   <div
                     key={workout.id}
-                    className="flex flex-col gap-3 rounded-2xl border border-white/5 bg-[#12141a] p-3 sm:flex-row sm:items-center sm:gap-6"
+                    className="flex flex-col gap-4 rounded-2xl border border-white/5 bg-[#12141a] px-4 py-4 sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-5"
                   >
-                    {/* Top remove button on mobile) */}
+                    {/* mobile) */}
                     <div className="flex items-center gap-3 sm:flex-1 sm:gap-6 min-w-0">
                       {/* Image */}
-                      <div className="relative h-14 w-20 shrink-0 overflow-hidden rounded-lg sm:h-16 sm:w-28">
+                      <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-lg sm:h-25 sm:w-28">
                         <Image
                           src={workout.image}
                           alt={workout.name}
@@ -310,8 +351,6 @@ const MyPlanWorkouts = () => {
           </div>
         )}
       </div>
-
-      {/* sorting */}
     </div>
   );
 };

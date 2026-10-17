@@ -18,7 +18,7 @@ const Banner = () => {
           FitLog is a dark, no-nonsense gym companion: pick a lift, lock it{" "}
           <br /> into today&apos;s plan, and watch the week&apos;s work add up.
         </p>
-        <div>
+        <div className="flex justify-center lg:block">
           <a
             href="#library"
             className="inline-block bg-[#C2F800] text-black text-xs font-bold px-4 py-2 rounded-lg mt-4"

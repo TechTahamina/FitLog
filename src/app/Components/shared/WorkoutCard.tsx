@@ -7,7 +7,7 @@ import { Workout } from "@/types/workout.types";
 
 const WorkoutCard = ({ workout }: { workout: Workout }) => {
   return (
-        <div className="bg-[#111111] rounded-2xl overflow-hidden border border-white/5">
+        <div className="bg-[#111111] rounded-2xl overflow-hidden border border-white/5 mx-4 sm:mx-0">
      <Link href={`/workouts/${workout.id}`}>
       {/* Image */}
       <div className="relative h-120 w-full">
